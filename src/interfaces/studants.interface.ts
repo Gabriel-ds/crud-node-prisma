@@ -1,4 +1,4 @@
-export interface Studant {
+export interface Student {
     id: string;
     name: string;
     ra: string;
@@ -6,22 +6,22 @@ export interface Studant {
     email: string
 }
 
-export interface StudantCreate {
+export interface StudentCreate {
     name: string;
     ra: string;
     cpf: string;
     email: string;
 }
 
-export interface StudantUpdate {
+export interface StudentUpdate {
     id: string;
     name: string;
     email: string;
 }
-export interface StudantRepository {
-    create(data: StudantCreate): Promise<Studant>;
-    findByCpfOrRa(cpf: string, ra: string): Promise<Studant | null>
-    listAllStudants(): Promise<Studant[]>;
-    updateStudant({ id, name, email }: StudantUpdate): Promise<Studant>;
-    delete(id: string): Promise<Studant | null>;
+export interface StudentRepository {
+    create(data: StudentCreate): Promise<Student>;
+    findByCpfOrRa(cpf: string, ra: string): Promise<Student | null>
+    listAllStudents(): Promise<Student[]>;
+    updateStudent({ id, name, email }: StudentUpdate): Promise<Student>;
+    delete(id: string): Promise<Student | null>;
 }

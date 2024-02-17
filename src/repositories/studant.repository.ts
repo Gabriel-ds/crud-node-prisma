@@ -1,8 +1,8 @@
 import { prisma } from '../database/prisma-client';
-import { Studant, StudantCreate, StudantRepository } from '../interfaces/studants.interface';
+import { Student, StudentCreate, StudentRepository } from '../interfaces/studants.interface';
 
-class StudantRepositoryPrisma implements StudantRepository {
-    async create(data: StudantCreate): Promise<Studant> {
+class StudentRepositoryPrisma implements StudentRepository {
+    async create(data: StudentCreate): Promise<Student> {
         const result = await prisma.studant.create({
             data: {
                 name: data.name,
@@ -14,7 +14,7 @@ class StudantRepositoryPrisma implements StudantRepository {
         return result;
     }
 
-    async findByCpfOrRa(cpf: string, ra: string): Promise<Studant | null> {
+    async findByCpfOrRa(cpf: string, ra: string): Promise<Student | null> {
         const result = await prisma.studant.findFirst({
             where: {
                 OR: [{ cpf }, { ra }],
@@ -23,12 +23,12 @@ class StudantRepositoryPrisma implements StudantRepository {
         return result
     }
 
-    async listAllStudants(): Promise<Studant[]> {
+    async listAllStudents(): Promise<Student[]> {
         const result = await prisma.studant.findMany()
         return result
     }
 
-    async updateStudant({ id, name, email }: Studant): Promise<Studant> {
+    async updateStudent({ id, name, email }: Student): Promise<Student> {
         const result = await prisma.studant.update({
             where: { id },
             data: { name, email }
@@ -36,7 +36,7 @@ class StudantRepositoryPrisma implements StudantRepository {
         return result
     }
 
-    async delete(id: string): Promise<Studant> {
+    async delete(id: string): Promise<Student> {
         const result = await prisma.studant.delete({
             where: {
                 id
@@ -46,5 +46,5 @@ class StudantRepositoryPrisma implements StudantRepository {
     }
 }
 
-export { StudantRepositoryPrisma };
+export { StudentRepositoryPrisma };
 

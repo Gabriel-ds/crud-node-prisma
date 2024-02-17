@@ -1,31 +1,31 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { Studant, StudantCreate, StudantRepository } from '../interfaces/studants.interface';
+import { Student, StudentCreate, StudentRepository } from '../interfaces/studants.interface';
 import { StudentUseCase } from './student.usecases';
 
-class MockStudantRepository implements StudantRepository {
-    private students: Studant[] = [];
+class MockStudentRepository implements StudentRepository {
+    private students: Student[] = [];
 
-    async create(student: StudantCreate): Promise<Studant> {
+    async create(student: StudentCreate): Promise<Student> {
         const newStudent = { ...student, id: (this.students.length + 1).toString() };
         this.students.push(newStudent);
         return newStudent;
     }
 
-    async findByCpfOrRa(cpf: string, ra: string): Promise<Studant | null> {
+    async findByCpfOrRa(cpf: string, ra: string): Promise<Student | null> {
         return this.students.find((student) => student.cpf === cpf || student.ra === ra) || null;
     }
 
-    async listAllStudants(): Promise<Studant[]> {
+    async listAllStudents(): Promise<Student[]> {
         return this.students;
     }
 
-    async updateStudant(student: Studant): Promise<Studant> {
+    async updateStudent(student: Student): Promise<Student> {
         const index = this.students.findIndex((s) => s.id === student.id);
         this.students[index] = { ...this.students[index], ...student };
         return this.students[index];
     }
 
-    async delete(id: string): Promise<Studant | null> {
+    async delete(id: string): Promise<Student | null> {
         const index = this.students.findIndex((s) => s.id === id);
         if (index !== -1) {
             return this.students.splice(index, 1)[0];
@@ -40,15 +40,15 @@ class MockStudantRepository implements StudantRepository {
 
 describe('StudentUseCase', () => {
     let studentUseCase: StudentUseCase;
-    let mockStudantRepository: MockStudantRepository;
+    let mockStudentRepository: MockStudentRepository;
 
     beforeEach(() => {
-        mockStudantRepository = new MockStudantRepository();
-        studentUseCase = new StudentUseCase(mockStudantRepository);
+        mockStudentRepository = new MockStudentRepository();
+        studentUseCase = new StudentUseCase(mockStudentRepository);
     });
 
     it('creates a new student', async () => {
-        const studentData: StudantCreate = {
+        const studentData: StudentCreate = {
             name: 'Bill Gates',
             cpf: '123.456.789-03',
             ra: '123457',
@@ -64,30 +64,30 @@ describe('StudentUseCase', () => {
     });
 
     it('lists all students', async () => {
-        const studentsData: StudantCreate[] = [
+        const studentsData: StudentCreate[] = [
             { name: 'Bill Gates', cpf: '123.456.789-01', ra: '123456', email: "bill@email.com" },
             { name: 'Steve Jobs', cpf: '987.654.321-09', ra: '654321', email: "steve@email.com" },
         ];
 
         await Promise.all(studentsData.map((student) => studentUseCase.create(student)));
 
-        const allStudents = await studentUseCase.listAllStudants();
+        const allStudents = await studentUseCase.listAllStudents();
 
         expect(allStudents).toHaveLength(studentsData.length);
     });
 
     it('updates a student', async () => {
-        const studentData: StudantCreate = { name: 'Bill Gates', cpf: '123.456.789-01', ra: '123456', email: "bill@email.com" };
+        const studentData: StudentCreate = { name: 'Bill Gates', cpf: '123.456.789-01', ra: '123456', email: "bill@email.com" };
         const createdStudent = await studentUseCase.create(studentData);
 
-        const updatedStudentData: Studant = { ...createdStudent, name: 'Elon Musk' };
-        const updatedStudent = await studentUseCase.updateStudant(updatedStudentData);
+        const updatedStudentData: Student = { ...createdStudent, name: 'Elon Musk' };
+        const updatedStudent = await studentUseCase.updateStudent(updatedStudentData);
 
         expect(updatedStudent.name).toBe('Elon Musk');
     });
 
     it('deletes a student', async () => {
-        const studentData: StudantCreate = {
+        const studentData: StudentCreate = {
             name: 'Bill Gates',
             cpf: '123.456.789-01',
             ra: '123456',

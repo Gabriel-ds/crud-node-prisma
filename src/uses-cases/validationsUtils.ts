@@ -1,6 +1,6 @@
-import { StudantCreate } from "../interfaces/studants.interface";
+import { StudentCreate } from "../interfaces/studants.interface";
 
-export function validateStudentData({ name, cpf, ra, email }: StudantCreate): void {
+export function validateStudentData({ name, cpf, ra, email }: StudentCreate): void {
     if (!name || !cpf || !ra || !email) {
         throw new Error('Todos os campos são obrigatórios.');
     }

@@ -1,16 +1,16 @@
-import { Studant, StudantCreate, StudantRepository, StudantUpdate } from '../interfaces/studants.interface';
+import { Student, StudentCreate, StudentRepository, StudentUpdate } from '../interfaces/studants.interface';
 import { validateStudentData } from './validationsUtils';
 
 class StudentUseCase {
-    private studentRepository: StudantRepository;
-    constructor(studentRepository: StudantRepository) {
+    private studentRepository: StudentRepository;
+    constructor(studentRepository: StudentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    async create({ name, cpf, ra, email }: StudantCreate): Promise<Studant> {
+    async create({ name, cpf, ra, email }: StudentCreate): Promise<Student> {
         validateStudentData({ cpf, name, ra, email })
-        const verifyExistStudant = await this.studentRepository.findByCpfOrRa(cpf, ra)
-        if (verifyExistStudant) {
+        const verifyExistStudent = await this.studentRepository.findByCpfOrRa(cpf, ra)
+        if (verifyExistStudent) {
             throw new Error('Estudante já existe.');
         }
 
@@ -18,13 +18,13 @@ class StudentUseCase {
         return result;
     }
 
-    async listAllStudants(): Promise<Studant[]> {
-        const result = await this.studentRepository.listAllStudants()
+    async listAllStudents(): Promise<Student[]> {
+        const result = await this.studentRepository.listAllStudents()
         return result
     }
 
-    async updateStudant({ id, name, email }: StudantUpdate) {
-        const result = await this.studentRepository.updateStudant({
+    async updateStudent({ id, name, email }: StudentUpdate) {
+        const result = await this.studentRepository.updateStudent({
             id,
             name,
             email

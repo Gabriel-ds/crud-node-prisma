@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify';
-import { StudantCreate, StudantUpdate } from '../interfaces/studants.interface';
-import { StudantRepositoryPrisma } from '../repositories/studant.repository';
+import { StudentCreate, StudentUpdate } from '../interfaces/studants.interface';
+import { StudentRepositoryPrisma } from '../repositories/studant.repository';
 import { StudentUseCase } from '../uses-cases/student.usecases';
 
 export async function studentRoutes(fastify: FastifyInstance) {
-    const studentRepository = new StudantRepositoryPrisma();
+    const studentRepository = new StudentRepositoryPrisma();
     const studentUseCase = new StudentUseCase(studentRepository);
 
-    fastify.post<{ Body: StudantCreate }>('/', async (req, reply) => {
+    fastify.post<{ Body: StudentCreate }>('/', async (req, reply) => {
         const { cpf, name, ra, email } = req.body
         try {
             const data = await studentUseCase.create({
@@ -24,18 +24,18 @@ export async function studentRoutes(fastify: FastifyInstance) {
 
     fastify.get('/', async (req, reply) => {
         try {
-            const data = await studentUseCase.listAllStudants()
+            const data = await studentUseCase.listAllStudents()
             reply.send(data)
         } catch (error) {
             reply.send(error)
         }
     })
 
-    fastify.put<{ Body: StudantUpdate, Params: { id: string } }>('/:id', async (req, reply) => {
+    fastify.put<{ Body: StudentUpdate, Params: { id: string } }>('/:id', async (req, reply) => {
         const { id } = req.params
         const { name, email } = req.body
         try {
-            const data = await studentUseCase.updateStudant({
+            const data = await studentUseCase.updateStudent({
                 id, name, email
             })
             return reply.send(data)
