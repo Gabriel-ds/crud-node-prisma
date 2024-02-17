@@ -14,10 +14,10 @@ class StudentRepositoryPrisma implements StudentRepository {
         return result;
     }
 
-    async findByCpfOrRa(cpf: string, ra: string): Promise<Student | null> {
+    async findByCpfOrRa(cpfOrRa: string): Promise<Student | null> {
         const result = await prisma.studant.findFirst({
             where: {
-                OR: [{ cpf }, { ra }],
+                OR: [{ cpf: cpfOrRa }, { ra: cpfOrRa }],
             },
         })
         return result

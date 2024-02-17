@@ -20,7 +20,7 @@ export interface StudentUpdate {
 }
 export interface StudentRepository {
     create(data: StudentCreate): Promise<Student>;
-    findByCpfOrRa(cpf: string, ra: string): Promise<Student | null>
+    findByCpfOrRa(cpfOrRa: string): Promise<Student | null>
     listAllStudents(): Promise<Student[]>;
     updateStudent({ id, name, email }: StudentUpdate): Promise<Student>;
     delete(id: string): Promise<Student | null>;

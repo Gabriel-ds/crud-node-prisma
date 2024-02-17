@@ -31,6 +31,16 @@ export async function studentRoutes(fastify: FastifyInstance) {
         }
     })
 
+    fastify.get<{ Params: { cpfOrRa: string } }>('/:cpfOrRa', async (req, reply) => {
+        const { cpfOrRa } = req.params
+        try {
+            const data = await studentUseCase.findByCpfOrRa(cpfOrRa)
+            return reply.send(data)
+        } catch (error) {
+            reply.send(error)
+        }
+    })
+
     fastify.put<{ Body: StudentUpdate, Params: { id: string } }>('/:id', async (req, reply) => {
         const { id } = req.params
         const { name, email } = req.body

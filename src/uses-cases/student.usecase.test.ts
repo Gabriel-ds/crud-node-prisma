@@ -11,8 +11,8 @@ class MockStudentRepository implements StudentRepository {
         return newStudent;
     }
 
-    async findByCpfOrRa(cpf: string, ra: string): Promise<Student | null> {
-        return this.students.find((student) => student.cpf === cpf || student.ra === ra) || null;
+    async findByCpfOrRa(cpfOrRa: any): Promise<Student | null> {
+        return this.students.find((student) => student.cpf === cpfOrRa || student.ra === cpfOrRa) || null;
     }
 
     async listAllStudents(): Promise<Student[]> {
