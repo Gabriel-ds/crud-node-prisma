@@ -1,0 +1,28 @@
+{
+  "name": "challenge-full-stack-web",
+  "version": "1.0.0",
+  "description": "+A Educação - Full Stack Web Developer\r ===================",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "dev": "tsx watch src/server.ts"
+  },
+  "keywords": [],
+  "author": "gabrields <gabrields1910@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "prisma": "^5.8.1",
+    "ts-jest": "^29.1.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.0",
+    "@prisma/client": "^5.8.1",
+    "fastify": "^4.25.2",
+    "fastify-cors": "^6.1.0",
+    "zod": "^3.22.4"
+  }
+}
