@@ -1,14 +1,13 @@
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import { studentsRoutes } from './http/routes/students.routes';
-// import { studentRoutes } from './routes/student.routes';
 
 const app = Fastify();
 
 app.register(cors);
 
 app.register(studentsRoutes, {
-    prefix: '/students',
+    prefix: '/students'
 });
 
 app.listen({ port: 3100 }, () => {

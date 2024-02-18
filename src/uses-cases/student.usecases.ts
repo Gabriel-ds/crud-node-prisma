@@ -46,6 +46,9 @@ class StudentUseCase {
 
     async delete(id: string) {
         const result = await this.studentRepository.delete(id)
+        if (!result) {
+            throw new Error('Erro ao deletar estudante')
+        }
         return result
     }
 }
